@@ -450,3 +450,37 @@ bool IsSequenceOfBST(int begin, int iEnd){
 	
 	return IsSequenceOfBST(begin, i - 1) && IsSequenceOfBST(i, iEnd - 1);
 }
+
+/*16.给定一个二叉查找树种中的节点（存在一个指向父亲节点的指针） 找出在中序遍历下它的后继和前驱
+
+一棵二叉查找树的中序遍历序列，正好是升序序列。假如根结点的父结点为 nullptr，则：
+
+如果当前结点有右孩子，则后继结点为这个右孩子的最左孩子；
+如果当前结点没有右孩子；
+2.1. 当前结点为根结点，返回 nullptr；
+2.2. 当前结点只是个普通结点，也就是存在父结点；
+2.2.1. 当前结点是父亲结点的左孩子，则父亲结点就是后继结点；
+2.2.2. 当前结点是父亲结点的右孩子，沿着父亲结点往上走，直到 n-1 代祖先是 n 代祖先的左孩子，则后继为 n 代祖先或遍历到根结点也没找到符合的，则当前结点就是中序遍历的最后一个结点，返回 nullptr。
+*/
+Node *FindIncrement(Node *node){
+	
+	/*当前节点有右孩子*/
+	if(node->right){
+		node = node->right;
+		while(node->left){
+			
+			node = node->left;
+		}
+		return node;
+	}else{			/*当前节点没有右孩子*/
+		
+		if(node->parent == nullptr){  /*2.1*/ 
+			
+			return node;
+		}
+		
+		
+	}
+	
+
+}
