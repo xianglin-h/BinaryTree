@@ -479,8 +479,44 @@ Node *FindIncrement(Node *node){
 			return node;
 		}
 		
-		
+		Node *p = node->parent;
+		if(p->left == node){
+			
+			return p;
+		}else{
+			
+			while(p->right == node){
+				
+				node = p;
+				p = p->parent;
+				if(p == nullptr){
+					
+					return nullptr;
+				}
+			}
+			
+			return p;
+			
+		}
 	}
-	
+}
 
+/*优化算法*/
+Node *FindIncrement(Node *node){
+	
+	if(node->right){
+		node = node->right;
+		while(node){
+			node = node->left;
+		}
+	}else{
+		Node *p = node->parent;
+		while(p && p->right == node){
+			
+			node = p;
+			p = p->parent;
+		}
+		node = p;
+	}
+	return node;
 }
