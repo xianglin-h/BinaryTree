@@ -520,3 +520,86 @@ Node *FindIncrement(Node *node){
 	}
 	return node;
 }
+
+/*19判断是否是二叉查找树*/
+/*第一种方法遍历左右子树的每个节点进行比较*/
+int maxValue(Node *root){
+	
+	int max = root->data;
+	if(root->left != nullptr){
+		
+		int LeftMax = maxValue(root->left);
+		max = (max > LeftMax) ? max : LeftMax;
+	}
+	
+	if(root->right != nullptr){
+		
+		int RightMax = maxValue(root->right);
+		max = (max > RightMax) ? max : RightMax;
+	}
+	
+	return max;
+}
+
+int minValue(Node *root){
+	
+	int min = root->data;
+	
+	if(root->left != nullptr){
+		
+		int LeftMin = minValue(root->left);
+		min = (min < LeftMin) ? min: LeftMin;
+	}
+	
+	if(root->right != nullptr){
+		
+		int rightMin = minValue(root->right);
+		min = (min < rightMin) ? min: rightMin;
+	}
+	
+	return min;
+}
+
+bool iSBinarySearchTree(Node *root){
+	
+	if(nullptr == node){
+		
+		return true;
+	}
+	
+	if(root->left != nullptr && maxValue(root->left) > root->data){
+	
+		return false;
+	}
+	
+	if(root->right != nullptr && minValue(root->right) < root->data){
+		
+		return false;
+	}
+	
+	return iSBinarySearchTree(root->left) && iSBinarySearchTree(root->right);
+}
+
+/*第二种方法：对于任意结点，所有左边的结点必须小于当前结点，所有右边结点必须大于当前结点，因此可从根结点开始判断，所有结点的值都应该落在一个区间内，
+自上而下传递区间的最小值和最大值。进入左子树时，更新最大值，进入右子树，更新最小值*/
+
+bool JudgeNode(Node *root, int _iMin, int _iMax){
+	
+	if(root == nullptr)
+		return true;
+	
+	if(root->data < _iMin || root->data > _iMax){
+		
+		return false;
+	}
+	
+	return JudgeNode(root->left, _iMin, root->data) && JudgeNode(root->right, root->data, _iMax);
+}
+
+
+bood iSBinarySearchTree(Node *root){
+	
+	JudgeNode(root, INT_MIN, INT_MAX);
+}
+
+/**/
